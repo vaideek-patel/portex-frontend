@@ -4,6 +4,7 @@ import { ILoginFormInputs, loginSchema, TLoginFormData } from "../../schema/logi
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import { useEffect } from "react";
 
 const Login = () => {
   const {
@@ -13,8 +14,15 @@ const Login = () => {
   } = useForm<ILoginFormInputs>({
     resolver: yupResolver(loginSchema),
   });
-  const { setItem } = useLocalStorage("token");
+  const { setItem, getItem } = useLocalStorage("token");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = getItem();
+    if (token) {
+      navigate("/");
+    }
+  }, []);
 
   const onSubmit = async (data: TLoginFormData) => {
     try {
@@ -27,7 +35,6 @@ const Login = () => {
         },
       });
       const response = await res.json();
-      console.log(response);
       if (response?.success) {
         toast.success("Registration successful!");
         setItem(response.token);

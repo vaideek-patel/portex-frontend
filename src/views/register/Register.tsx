@@ -3,6 +3,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { IRegisterFormInputs, TRegisterFormData, registerSchema } from "../../schema/registerSchema";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const Register = () => {
   const {
@@ -12,8 +14,15 @@ const Register = () => {
   } = useForm<IRegisterFormInputs>({
     resolver: yupResolver(registerSchema),
   });
-
+  const { getItem } = useLocalStorage("token");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = getItem();
+    if (token) {
+      navigate("/");
+    }
+  }, []);
 
   const onSubmit = async (data: TRegisterFormData) => {
     try {

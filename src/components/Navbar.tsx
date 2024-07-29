@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 const Navbar = () => {
   const { getItem, removeItem } = useLocalStorage("token");
   const token = getItem();
-  console.log(token);
   const navigate = useNavigate();
 
   const handleLogoutClick = () => {
