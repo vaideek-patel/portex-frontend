@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IRegisterFormInputs, TRegisterFormData, registerSchema } from "../../schema/registerSchema";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const {
@@ -74,6 +74,12 @@ const Register = () => {
             className='w-full px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-700'>
             Register
           </button>
+          <p className='float-right'>
+            Already registered?{" "}
+            <Link to='/login' className='text-blue-600'>
+              Login here
+            </Link>
+          </p>
         </form>
       </div>
     </div>
